@@ -19,4 +19,8 @@ export class HomePage {
     
     console.log("Continuo aqui.");
   }
+
+  enviarCon(){
+    this.nav.navigateForward("form-contato");
+  }
 }
