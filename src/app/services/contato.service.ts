@@ -11,4 +11,8 @@ export class ContatoService {
   incluir(contato: any){
     return this.firestore.collection("contato").add(contato);
   }
+
+  listar(){
+    return this.firestore.collection("contato").snapshotChanges();
+  }
 }

@@ -11,4 +11,8 @@ export class TarefaService {
   incluir(tarefa: any){
     return this.firestore.collection("tarefa").add(tarefa);
   }
+
+  listar(){
+    return this.firestore.collection("tarefa").snapshotChanges();
+  }
 }

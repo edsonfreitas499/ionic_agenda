@@ -26,6 +26,7 @@ export class FormTarefaPage implements OnInit {
     tarefa['nome'] = this.nome;
     tarefa['descricao'] = this.descricao;
 
+    console.log(tarefa);
     this.service.incluir(tarefa);
   }
 }

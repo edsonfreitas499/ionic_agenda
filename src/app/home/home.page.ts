@@ -23,4 +23,12 @@ export class HomePage {
   enviarCon(){
     this.nav.navigateForward("form-contato");
   }
+
+  listarTarefa(){
+    this.nav.navigateForward("tarefas");
+  }
+
+  listarContato(){
+    this.nav.navigateForward("contatos");
+  }
 }
