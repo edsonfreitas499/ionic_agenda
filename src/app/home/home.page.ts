@@ -20,15 +20,5 @@ export class HomePage {
     console.log("Continuo aqui.");
   }
 
-  enviarCon(){
-    this.nav.navigateForward("form-contato");
-  }
-
-  listarTarefa(){
-    this.nav.navigateForward("tarefas");
-  }
-
-  listarContato(){
-    this.nav.navigateForward("contatos");
-  }
+ 
 }

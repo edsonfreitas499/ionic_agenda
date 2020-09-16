@@ -15,4 +15,8 @@ export class TarefaService {
   listar(){
     return this.firestore.collection("tarefa").snapshotChanges();
   }
+
+  alterar(tarefa, id){
+    return this.firestore.doc('tarefa/' + id).update(tarefa);
+  }
 }

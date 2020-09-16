@@ -15,4 +15,8 @@ export class ContatoService {
   listar(){
     return this.firestore.collection("contato").snapshotChanges();
   }
+
+  alterar(contato, id){
+    return this.firestore.doc('contato/' + id).update(contato);
+  }
 }
