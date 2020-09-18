@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import {NavController} from '@ionic/angular';
+import {NavController, AlertController} from '@ionic/angular';
 import {ActivatedRoute} from '@angular/router';
 
 import { ContatoService } from '../services/contato.service';
@@ -16,7 +16,8 @@ export class ContatosPage implements OnInit {
 
   constructor(private service : ContatoService,
               private rota: ActivatedRoute,
-              private nav: NavController) { }
+              private nav: NavController,
+              private alerta: AlertController) { }
 
   ngOnInit() {
     this.service.listar().subscribe(data => {
@@ -42,5 +43,42 @@ export class ContatosPage implements OnInit {
       }
   ]);
   }
+
+  async remover(registro){
+
+    const mensagem = await this.alerta.create({
+      header: "Atenção",
+      message: "Deseja excluir essa tarefa?",
+      buttons: [
+        {
+          text: "Ok",
+          handler:() => {
+            this.service.excluir(registro);
+            this.mensagemConfirmacao();
+          }
+        }, 
+        {
+          text: "Cancelar",
+          handler:() => {}
+        }
+      ]
+    });
+    await mensagem.present();
+    }
+    
+   async mensagemConfirmacao(){
+      const confirmacao = await this.alerta.create({
+        header: "Sucesso!",
+        message: "Tarefa excluida com sucesso!",
+        buttons: [
+          {
+            text: "oK",
+            handler:() => {}
+          }
+        ]
+  });
+      await confirmacao.present();
+  }
+
 
 }

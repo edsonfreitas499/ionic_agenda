@@ -19,4 +19,8 @@ export class ContatoService {
   alterar(contato, id){
     return this.firestore.doc('contato/' + id).update(contato);
   }
+
+  excluir(tarefa){
+    return this.firestore.doc('contato/' + tarefa.id).delete();
+  }
 }
