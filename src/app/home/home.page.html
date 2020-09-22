@@ -3,7 +3,6 @@
     <ion-title>
       Blank
     </ion-title>
-    <ion-back-button></ion-back-button>
   </ion-toolbar>
 </ion-header>
 
@@ -15,9 +14,19 @@
   </ion-header>
 
   <div id="container">
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          Usúario logado: {{usuario}}
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-button (click)="sair()">Sair</ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
     <ion-button (click)="enviar()">Clique aqui</ion-button>
-
-
   </div>
 
   
