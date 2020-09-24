@@ -5,6 +5,8 @@ import {ActivatedRoute} from '@angular/router';
 
 import { ContatoService } from '../services/contato.service';
 
+
+
 @Component({
   selector: 'app-contatos',
   templateUrl: './contatos.page.html',

@@ -5,6 +5,8 @@ import { ActivatedRoute } from '@angular/router';
 
 import { ContatoService } from '../services/contato.service';
 
+import { FormGroup, FormBuilder , Validators, FormControl } from '@angular/forms';
+
 @Component({
   selector: 'app-form-contato',
   templateUrl: './form-contato.page.html',
@@ -14,7 +16,8 @@ export class FormContatoPage implements OnInit {
 
   constructor(private service: ContatoService,
               private nav : NavController,
-              private rota: ActivatedRoute) { }
+              private rota: ActivatedRoute,
+              private formulario: FormBuilder) { }
 
   nome: string;
   email: string;
@@ -22,29 +25,68 @@ export class FormContatoPage implements OnInit {
 
   id = null;
 
+  validacao: FormGroup;
+  MensagemErro: string = '';
+
   ngOnInit() {
     this.id = this.rota.snapshot.params['id'];
     this.nome = this.rota.snapshot.params['nome'];
     this.email = this.rota.snapshot.params['email'];
     this.telefone = this.rota.snapshot.params['telefone'];
+
+    //----------------------------------------//
+    this.validacao = this.formulario.group({
+      nome: new FormControl('', Validators.compose([
+        Validators.required,
+        Validators.minLength(10)
+      ])),
+      email: new FormControl('', Validators.compose([
+        Validators.required,
+        Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
+      ])),
+      telefone: new FormControl('', Validators.compose([
+        Validators.required,
+        Validators.minLength(8)
+      ]))
+
+    });
   }
 
-  enviarContato(){
+  mensagem_validacao = {
+    'email': [
+      {type: 'required', message: 'E-mail é obrigatório'},
+      {type: 'pattern', message: 'E-mail inválido'}
+    ],
+    'telefone': [
+      {type: 'required', message: 'Telefone é obrigatória'},
+      { type: 'minlength', 
+        message: 'Telefone deve ter no mínimo oito caracteres'
+      }
+    ],
+    'nome': [
+      {type: 'required', message: 'Nome é obrigatória'},
+      { type: 'minlength', 
+        message: 'Nome deve ter no mínimo 10 caracteres'
+      }
+    ],
+  };
 
-    let contato = {};
+  enviarContato(valor){
 
-    console.log("Nome: " + this.nome);
-    console.log("Descrição: " + this.email);
-    console.log("Descrição: " + this.telefone);
+  //  let contato = {};
 
-    contato['nome'] = this.nome;
-    contato['email'] = this.email;
-    contato['telefone'] = this.telefone;
+  //  console.log("Nome: " + this.nome);
+  //  console.log("Descrição: " + this.email);
+  //  console.log("Descrição: " + this.telefone);
+
+  //  contato['nome'] = this.nome;
+  //  contato['email'] = this.email;
+  //  contato['telefone'] = this.telefone;
 
     if(this.id == null){
-      this.service.incluir(contato);
+      this.service.incluir(valor);
     }else{
-      this.service.alterar(contato, this.id);
+      this.service.alterar(valor, this.id);
     }
     
     this.nav.navigateForward("contatos");

@@ -8,29 +8,58 @@
 </ion-header>
 
 <ion-content>
-  <ion-grid>
-    <ion-row>
-      <ion-col>
-        <ion-input type="text" placeholder="Nome" [(ngModel)]="nome"></ion-input>
-      </ion-col>
-    </ion-row>
-
-    <ion-row>
-      <ion-col>
-        <ion-input type="text" placeholder="E-Mail" [(ngModel)]="email"></ion-input>
-      </ion-col>
-    </ion-row>
-
-    <ion-row>
-      <ion-col>
-        <ion-input type="text" placeholder="Telefone" [(ngModel)]="telefone"></ion-input>
-      </ion-col>
-    </ion-row>
-
-    <ion-row>
-      <ion-col>
-        <ion-button (click)="enviarContato()">Salvar</ion-button>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+  <form [formGroup]="validacao" (ngSubmit)="enviarContato(validacao.value)" >
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-input type="text" placeholder="Nome" formControlName="nome"></ion-input>
+        </ion-col>
+      </ion-row>
+      <div class="validation-errors">
+        <ng-container *ngFor="let m of mensagem_validacao.nome">
+          <div class="error-message" 
+          *ngIf="validacao.get('nome').hasError(m.type) 
+                && (validacao.get('nome').dirty 
+                || validacao.get('nome').touched)">
+             {{m.message}} 
+        </div>
+        </ng-container>
+      </div>
+      <ion-row>
+        <ion-col>
+          <ion-input type="text" placeholder="E-Mail"  formControlName="email"></ion-input>
+        </ion-col>
+      </ion-row>
+      <div class="validation-errors">
+        <ng-container *ngFor="let m of mensagem_validacao.email">
+          <div class="error-message" 
+          *ngIf="validacao.get('email').hasError(m.type) 
+                && (validacao.get('email').dirty 
+                || validacao.get('email').touched)">
+             {{m.message}} 
+        </div>
+        </ng-container>
+      </div>
+      <ion-row>
+        <ion-col>
+          <ion-input type="text" placeholder="Telefone" formControlName="telefone"></ion-input>
+        </ion-col>
+      </ion-row>
+      <div class="validation-errors">
+        <ng-container *ngFor="let m of mensagem_validacao.telefone">
+          <div class="error-message" 
+          *ngIf="validacao.get('telefone').hasError(m.type) 
+                && (validacao.get('telefone').dirty 
+                || validacao.get('telefone').touched)">
+             {{m.message}} 
+        </div>
+        </ng-container>
+      </div>
+      <ion-row>
+        <ion-col>
+          <ion-button type="submit" [disabled]="!validacao.valid">Salvar</ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </form>
 </ion-content>
