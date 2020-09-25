@@ -30,10 +30,7 @@ export class FormContatoPage implements OnInit {
 
   ngOnInit() {
     this.id = this.rota.snapshot.params['id'];
-    this.nome = this.rota.snapshot.params['nome'];
-    this.email = this.rota.snapshot.params['email'];
-    this.telefone = this.rota.snapshot.params['telefone'];
-
+   
     //----------------------------------------//
     this.validacao = this.formulario.group({
       nome: new FormControl('', Validators.compose([
@@ -50,6 +47,11 @@ export class FormContatoPage implements OnInit {
       ]))
 
     });
+
+    this.validacao.get('nome').setValue(this.rota.snapshot.params['nome']);
+    this.validacao.get('email').setValue(this.rota.snapshot.params['email']);
+    this.validacao.get('telefone').setValue(this.rota.snapshot.params['telefone']);
+  
   }
 
   mensagem_validacao = {
@@ -73,20 +75,20 @@ export class FormContatoPage implements OnInit {
 
   enviarContato(valor){
 
-  //  let contato = {};
+   let contato = {};
 
-  //  console.log("Nome: " + this.nome);
+ //   console.log("Nome: " + this.nome);
   //  console.log("Descrição: " + this.email);
   //  console.log("Descrição: " + this.telefone);
 
-  //  contato['nome'] = this.nome;
-  //  contato['email'] = this.email;
-  //  contato['telefone'] = this.telefone;
+   contato['nome'] = this.validacao.get('nome').value;
+   contato['email'] = this.validacao.get('email').value;
+   contato['telefone'] = this.validacao.get('telefone').value;
 
     if(this.id == null){
-      this.service.incluir(valor);
+      this.service.incluir(contato);
     }else{
-      this.service.alterar(valor, this.id);
+      this.service.alterar(contato, this.id);
     }
     
     this.nav.navigateForward("contatos");

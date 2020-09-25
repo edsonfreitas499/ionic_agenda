@@ -1,6 +1,11 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>tarefas</ion-title>
+
+    <ion-buttons slot="start">
+      <ion-menu-button autoHide="false"></ion-menu-button>
+    </ion-buttons>
+    
     <ion-buttons slot="end">
       <ion-button routerLink="/form-tarefa"></ion-button>
       <ion-icon slot="icon-only" name="add"></ion-icon>
@@ -9,6 +14,10 @@
 </ion-header>
 
 <ion-content>
+  <ion-searchbar [(ngModel)]="pesquisa" (ionChange)="buscar()" placeholder="Digite o termo de pesquisa">
+    
+  </ion-searchbar>
+
   <ion-card *ngFor="let item of tarefas">
     <ion-card-header>
       <ion-card-title>{{item.nome}}</ion-card-title>

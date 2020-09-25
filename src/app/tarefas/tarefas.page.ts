@@ -5,6 +5,8 @@ import {ActivatedRoute} from '@angular/router';
 
 import { TarefaService } from '../services/tarefa.service';
 
+import { first } from 'rxjs/operators';
+
 
 @Component({
   selector: 'app-tarefas',
@@ -14,6 +16,7 @@ import { TarefaService } from '../services/tarefa.service';
 export class TarefasPage implements OnInit {
 
   tarefas: any;
+  pesquisa: string;
 
   constructor(private service : TarefaService,
               private rota: ActivatedRoute,
@@ -79,6 +82,25 @@ export class TarefasPage implements OnInit {
       await confirmacao.present();
   }
 
-  
+  async buscar(){
+
+    if(!this.pesquisa){
+      this.service.listar().subscribe(data => {
+        this.tarefas = data.map(e => {
+          return {
+            id: e.payload.doc.id,
+            nome: e.payload.doc.data()['nome'],
+            descricao: e.payload.doc.data()['descricao']
+          }
+        })
+      })
+    }
+
+    this.tarefas = this.tarefas.filter(atual => {
+      if(atual.nome && this.pesquisa){
+        return atual.nome.toLowerCase().indexOf(this.pesquisa.toLowerCase()) > -1;
+      }
+    })
+  }
 
 }
